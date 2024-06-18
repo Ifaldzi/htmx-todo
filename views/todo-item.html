@@ -1,0 +1,45 @@
+<div class="col-12 todo-item" todo-id="${todo.id}">
+  <div class="row align-items-center p-2">
+    <div class="col-auto px-0">
+      <input
+        type="checkbox"
+        aria-label="Checkbox for following text input"
+        {{if
+        .Done}}
+        checked
+        {{end}}
+        name="done"
+        hx-put="/todos/{{.Id}}"
+        hx-trigger="click"
+        hx-include="next [name='title']"
+        hx-target="closest .todo-item"
+      />
+    </div>
+
+    <div class="col px-2">
+      <input
+        type="text"
+        class="form-control {{if .Done}} todo-done {{end}}"
+        aria-label="Text input with checkbox"
+        value="{{.Title}}"
+        name="title"
+        hx-put="/todos/{{.Id}}"
+        hx-trigger="keyup[key=='Enter']"
+        hx-include="previous [name='done']"
+        hx-target="closest .todo-item"
+      />
+    </div>
+    <div class="col-auto px-0">
+      <button
+        todo-id="${todo.id}"
+        class="btn btn-outline-secondary bg-danger text-white"
+        type="button"
+        hx-swap="delete"
+        hx-delete="/todos/{{.Id}}"
+        hx-target="closest .todo-item"
+      >
+        X
+      </button>
+    </div>
+  </div>
+</div>
